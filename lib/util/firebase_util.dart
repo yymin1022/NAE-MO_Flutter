@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +14,8 @@ class FirebaseUtil {
     return _instance;
   }
 
+  late FirebaseFirestore _firestoreDB;
+
   Future<void> initFirebase() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -23,5 +26,7 @@ class FirebaseUtil {
       FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
       return true;
     };
+
+    _firestoreDB = FirebaseFirestore.instance;
   }
 }
