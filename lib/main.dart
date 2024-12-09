@@ -5,7 +5,6 @@ import 'package:todo_project/util/firebase_util.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseUtil().initFirebase();
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   runApp(const MyApp());
 }
