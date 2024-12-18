@@ -36,7 +36,7 @@ class _MainPageState extends State<MainPage> {
                 onTap: () {
                   if(!isCalendarEnabled) _handleScrollSnap(0);
                 },
-                child: const CalendarView()
+                child: CalendarView(isPageEnabled: isCalendarEnabled)
               ),
               const TimeListview(),
               GestureDetector(
