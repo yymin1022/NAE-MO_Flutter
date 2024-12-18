@@ -22,17 +22,42 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        scrollDirection: Axis.horizontal,
-        child: const Row(
-          children: [
-            CalendarView(),
-            TimeListview(),
-            TodoView()
-          ],
+      body: Listener(
+        onPointerUp: (_) {
+          _handleScrollSnap();
+        },
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          scrollDirection: Axis.horizontal,
+          child: const Row(
+            children: [
+              CalendarView(),
+              TimeListview(),
+              TodoView()
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void _handleScrollSnap() {
+    var curScrollPosition = _scrollController.offset;
+    var maxScrollPosition = _scrollController.position.maxScrollExtent;
+    var curScrollRatio = curScrollPosition / maxScrollPosition * 100;
+
+    if(curScrollRatio < 50) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    } else {
+      _scrollController.animateTo(
+        maxScrollPosition,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 }
