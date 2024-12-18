@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
                 onTap: () {
                   if(isCalendarEnabled) _handleScrollSnap(_scrollController.position.maxScrollExtent);
                 },
-                child: const TodoView()
+                child: TodoView(isPageEnabled: !isCalendarEnabled)
               )
             ],
           ),
