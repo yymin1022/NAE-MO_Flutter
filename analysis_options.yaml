@@ -38,7 +38,6 @@ linter:
     - omit_local_variable_types
     - prefer_const_constructors
     - prefer_const_declarations
-    - prefer_single_quotes
     - prefer_void_to_null
     - sized_box_for_whitespace
     - sort_child_properties_last
