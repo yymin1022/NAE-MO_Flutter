@@ -13,7 +13,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _calendarScrollController = ScrollController();
+  final ScrollController _todoScrollController = ScrollController();
+  final ScrollController _pageScrollController = ScrollController();
   bool isCalendarEnabled = true;
 
   @override
@@ -25,10 +27,10 @@ class _MainPageState extends State<MainPage> {
       ),
       body: Listener(
         onPointerUp: (_) {
-          _handleScrollSnap(_scrollController.offset);
+          _handleScrollSnap(_pageScrollController.offset);
         },
         child: SingleChildScrollView(
-          controller: _scrollController,
+          controller: _pageScrollController,
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
@@ -36,14 +38,20 @@ class _MainPageState extends State<MainPage> {
                 onTap: () {
                   if(!isCalendarEnabled) _handleScrollSnap(0);
                 },
-                child: CalendarView(isPageEnabled: isCalendarEnabled)
+                child: CalendarView(
+                  isPageEnabled: isCalendarEnabled,
+                  scrollController: _calendarScrollController,
+                )
               ),
               const TimeListview(),
               GestureDetector(
                 onTap: () {
-                  if(isCalendarEnabled) _handleScrollSnap(_scrollController.position.maxScrollExtent);
+                  if(isCalendarEnabled) _handleScrollSnap(_pageScrollController.position.maxScrollExtent);
                 },
-                child: TodoView(isPageEnabled: !isCalendarEnabled)
+                child: TodoView(
+                  isPageEnabled: !isCalendarEnabled,
+                  scrollController: _todoScrollController,
+                )
               )
             ],
           ),
@@ -53,20 +61,20 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _handleScrollSnap(double curScrollPosition) {
-    var maxScrollPosition = _scrollController.position.maxScrollExtent;
+    var maxScrollPosition = _pageScrollController.position.maxScrollExtent;
     var curScrollRatio = curScrollPosition / maxScrollPosition * 100;
 
     setState(() {
       if(curScrollRatio < 50) {
         isCalendarEnabled = true;
-        _scrollController.animateTo(
+        _pageScrollController.animateTo(
           0,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       } else {
         isCalendarEnabled = false;
-        _scrollController.animateTo(
+        _pageScrollController.animateTo(
           maxScrollPosition,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,

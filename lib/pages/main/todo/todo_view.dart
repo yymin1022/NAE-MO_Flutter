@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:todo_project/pages/main/todo/todo_item.dart';
 
 class TodoView extends StatefulWidget {
-  const TodoView({super.key, required this.isPageEnabled});
+  const TodoView({super.key, required this.isPageEnabled, required this.scrollController});
   final bool isPageEnabled;
+  final ScrollController scrollController;
 
   @override
   State<StatefulWidget> createState() => _TodoViewState();
@@ -20,6 +21,7 @@ class _TodoViewState extends State<TodoView> {
       width: MediaQuery.of(context).size.width - 120,
       color: widget.isPageEnabled ? Colors.blue : Colors.white,
       child: ListView.builder(
+          controller: widget.scrollController,
           itemCount: itemCnt,
           itemBuilder: (_, idx) {
             return TodoItem(idx: idx, itemColor: colorList[idx % 2]);
