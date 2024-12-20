@@ -22,7 +22,7 @@ class _CalendarViewState extends State<CalendarView> {
       child: ListView.builder(
         itemCount: itemCnt,
         itemBuilder: (_, idx) {
-          return CalendarItem(itemColor: colorList[idx % 2]);
+          return CalendarItem(idx: idx, itemColor: colorList[idx % 2]);
         }
       ),
     );
