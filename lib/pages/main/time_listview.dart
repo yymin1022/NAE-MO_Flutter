@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TimeListview extends StatefulWidget {
-  const TimeListview({super.key});
+  const TimeListview({super.key, required this.scrollController});
+  final ScrollController scrollController;
 
   @override
   State<StatefulWidget> createState() => _TimeListviewState();

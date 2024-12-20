@@ -5,7 +5,6 @@ import 'package:todo_project/pages/main/todo/todo_view.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -14,8 +13,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final ScrollController _calendarScrollController = ScrollController();
-  final ScrollController _todoScrollController = ScrollController();
   final ScrollController _pageScrollController = ScrollController();
+  final ScrollController _timeScrollController = ScrollController();
+  final ScrollController _todoScrollController = ScrollController();
   bool isCalendarEnabled = true;
 
   @override
@@ -40,9 +40,11 @@ class _MainPageState extends State<MainPage> {
   void _syncScroll() {
     if(_calendarScrollController.hasClients && _todoScrollController.hasClients) {
       if(isCalendarEnabled) {
+        _timeScrollController.jumpTo(_calendarScrollController.offset);
         _todoScrollController.jumpTo(_calendarScrollController.offset);
       } else {
         _calendarScrollController.jumpTo(_todoScrollController.offset);
+        _timeScrollController.jumpTo(_todoScrollController.offset);
       }
     }
   }
@@ -72,7 +74,9 @@ class _MainPageState extends State<MainPage> {
                   scrollController: _calendarScrollController,
                 )
               ),
-              const TimeListview(),
+              TimeListview(
+                scrollController: _timeScrollController,
+              ),
               GestureDetector(
                 onTap: () {
                   if(isCalendarEnabled) _handleScrollSnap(_pageScrollController.position.maxScrollExtent);
