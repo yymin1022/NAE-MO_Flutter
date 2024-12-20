@@ -19,6 +19,35 @@ class _MainPageState extends State<MainPage> {
   bool isCalendarEnabled = true;
 
   @override
+  void initState() {
+    super.initState();
+
+    _calendarScrollController.addListener(_syncScroll);
+    _todoScrollController.addListener(_syncScroll);
+  }
+
+  @override
+  void dispose() {
+    _calendarScrollController.removeListener(_syncScroll);
+    _todoScrollController.removeListener(_syncScroll);
+    _calendarScrollController.dispose();
+    _todoScrollController.dispose();
+
+    _pageScrollController.dispose();
+    super.dispose();
+  }
+
+  void _syncScroll() {
+    if (_calendarScrollController.hasClients && _todoScrollController.hasClients) {
+      if (_calendarScrollController.offset != _todoScrollController.offset) {
+        _todoScrollController.jumpTo(_calendarScrollController.offset);
+      } else if (_todoScrollController.offset != _calendarScrollController.offset) {
+        _calendarScrollController.jumpTo(_todoScrollController.offset);
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
