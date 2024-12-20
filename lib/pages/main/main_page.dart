@@ -38,10 +38,10 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _syncScroll() {
-    if (_calendarScrollController.hasClients && _todoScrollController.hasClients) {
-      if (_calendarScrollController.offset != _todoScrollController.offset) {
+    if(_calendarScrollController.hasClients && _todoScrollController.hasClients) {
+      if(isCalendarEnabled) {
         _todoScrollController.jumpTo(_calendarScrollController.offset);
-      } else if (_todoScrollController.offset != _calendarScrollController.offset) {
+      } else {
         _calendarScrollController.jumpTo(_todoScrollController.offset);
       }
     }
