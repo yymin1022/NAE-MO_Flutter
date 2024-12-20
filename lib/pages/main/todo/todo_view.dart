@@ -22,7 +22,7 @@ class _TodoViewState extends State<TodoView> {
       child: ListView.builder(
           itemCount: itemCnt,
           itemBuilder: (_, idx) {
-            return TodoItem(itemColor: colorList[idx % 2]);
+            return TodoItem(idx: idx, itemColor: colorList[idx % 2]);
           }
       ),
     );
