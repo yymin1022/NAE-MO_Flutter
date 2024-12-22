@@ -23,22 +23,26 @@ class _MainPageState extends State<MainPage> {
     super.initState();
 
     _calendarScrollController.addListener(_syncScroll);
+    _timeScrollController.addListener(_syncScroll);
     _todoScrollController.addListener(_syncScroll);
   }
 
   @override
   void dispose() {
     _calendarScrollController.removeListener(_syncScroll);
+    _timeScrollController.removeListener(_syncScroll);
     _todoScrollController.removeListener(_syncScroll);
     _calendarScrollController.dispose();
-    _todoScrollController.dispose();
-
     _pageScrollController.dispose();
+    _timeScrollController.dispose();
+    _todoScrollController.dispose();
     super.dispose();
   }
 
   void _syncScroll() {
-    if(_calendarScrollController.hasClients && _todoScrollController.hasClients) {
+    if(_calendarScrollController.hasClients
+        && _timeScrollController.hasClients
+        && _todoScrollController.hasClients) {
       if(isCalendarEnabled) {
         _timeScrollController.jumpTo(_calendarScrollController.offset);
         _todoScrollController.jumpTo(_calendarScrollController.offset);

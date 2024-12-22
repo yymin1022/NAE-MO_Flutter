@@ -11,9 +11,21 @@ class TimeListview extends StatefulWidget {
 class _TimeListviewState extends State<TimeListview> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 60,
-      color: Colors.grey,
+      child: ListView.builder(
+        controller: widget.scrollController,
+        itemCount: 24,
+        itemBuilder: (_, idx) {
+          return SizedBox(
+            height: 20,
+            child: Text(
+              idx.toString(),
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+      )
     );
   }
 }
