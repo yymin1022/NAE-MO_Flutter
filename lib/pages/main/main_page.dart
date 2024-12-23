@@ -5,7 +5,6 @@ import 'package:todo_project/pages/main/todo/todo_view.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -13,8 +12,46 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _calendarScrollController = ScrollController();
+  final ScrollController _pageScrollController = ScrollController();
+  final ScrollController _timeScrollController = ScrollController();
+  final ScrollController _todoScrollController = ScrollController();
   bool isCalendarEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _calendarScrollController.addListener(_syncScroll);
+    _timeScrollController.addListener(_syncScroll);
+    _todoScrollController.addListener(_syncScroll);
+  }
+
+  @override
+  void dispose() {
+    _calendarScrollController.removeListener(_syncScroll);
+    _timeScrollController.removeListener(_syncScroll);
+    _todoScrollController.removeListener(_syncScroll);
+    _calendarScrollController.dispose();
+    _pageScrollController.dispose();
+    _timeScrollController.dispose();
+    _todoScrollController.dispose();
+    super.dispose();
+  }
+
+  void _syncScroll() {
+    if(_calendarScrollController.hasClients
+        && _timeScrollController.hasClients
+        && _todoScrollController.hasClients) {
+      if(isCalendarEnabled) {
+        _timeScrollController.jumpTo(_calendarScrollController.offset);
+        _todoScrollController.jumpTo(_calendarScrollController.offset);
+      } else {
+        _calendarScrollController.jumpTo(_todoScrollController.offset);
+        _timeScrollController.jumpTo(_todoScrollController.offset);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +62,10 @@ class _MainPageState extends State<MainPage> {
       ),
       body: Listener(
         onPointerUp: (_) {
-          _handleScrollSnap(_scrollController.offset);
+          _handleScrollSnap(_pageScrollController.offset);
         },
         child: SingleChildScrollView(
-          controller: _scrollController,
+          controller: _pageScrollController,
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
@@ -36,14 +73,22 @@ class _MainPageState extends State<MainPage> {
                 onTap: () {
                   if(!isCalendarEnabled) _handleScrollSnap(0);
                 },
-                child: CalendarView(isPageEnabled: isCalendarEnabled)
+                child: CalendarView(
+                  isPageEnabled: isCalendarEnabled,
+                  scrollController: _calendarScrollController,
+                )
               ),
-              const TimeListview(),
+              TimeListview(
+                scrollController: _timeScrollController,
+              ),
               GestureDetector(
                 onTap: () {
-                  if(isCalendarEnabled) _handleScrollSnap(_scrollController.position.maxScrollExtent);
+                  if(isCalendarEnabled) _handleScrollSnap(_pageScrollController.position.maxScrollExtent);
                 },
-                child: TodoView(isPageEnabled: !isCalendarEnabled)
+                child: TodoView(
+                  isPageEnabled: !isCalendarEnabled,
+                  scrollController: _todoScrollController,
+                )
               )
             ],
           ),
@@ -53,20 +98,20 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _handleScrollSnap(double curScrollPosition) {
-    var maxScrollPosition = _scrollController.position.maxScrollExtent;
+    var maxScrollPosition = _pageScrollController.position.maxScrollExtent;
     var curScrollRatio = curScrollPosition / maxScrollPosition * 100;
 
     setState(() {
       if(curScrollRatio < 50) {
         isCalendarEnabled = true;
-        _scrollController.animateTo(
+        _pageScrollController.animateTo(
           0,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       } else {
         isCalendarEnabled = false;
-        _scrollController.animateTo(
+        _pageScrollController.animateTo(
           maxScrollPosition,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
