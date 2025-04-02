@@ -59,6 +59,13 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/setting');
+              },
+              icon: const Icon(Icons.settings))
+        ],
       ),
       body: Listener(
         onPointerUp: (_) {
