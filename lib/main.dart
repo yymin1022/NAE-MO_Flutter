@@ -6,7 +6,7 @@ import "package:todo_project/pages/setting/setting_page.dart";
 import "package:todo_project/util/firebase_util.dart";
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await FirebaseUtil().initFirebase();
 
