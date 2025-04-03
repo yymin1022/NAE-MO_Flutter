@@ -61,10 +61,11 @@ class _MainPageState extends State<MainPage> {
         title: Text(widget.title),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/setting');
-              },
-              icon: const Icon(Icons.settings))
+            onPressed: () {
+              Navigator.of(context).pushNamed('/setting');
+            },
+            icon: const Icon(Icons.settings)
+          )
         ],
       ),
       body: Listener(
