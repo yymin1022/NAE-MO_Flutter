@@ -16,10 +16,11 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           const Text("Login"),
           TextButton(
-              onPressed: () {
-                Navigator.of(context).popAndPushNamed('/main');
-              },
-              child: const Text("Go to main"))
+            onPressed: () {
+              Navigator.of(context).popAndPushNamed('/main');
+            },
+            child: const Text("Go to main")
+          )
         ],
       )
     );
