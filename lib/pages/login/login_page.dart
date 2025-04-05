@@ -20,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       await FirebaseUtil().signInWithGoogle();
-      await Navigator.of(context).popAndPushNamed('/main');
     } catch (e) {
       ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('로그인 실패: $e')));
