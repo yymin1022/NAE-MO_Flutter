@@ -30,9 +30,7 @@ class _SettingPageState extends State<SettingPage> {
               onPressed: () async {
                 await FirebaseUtil().signOut();
 
-                if (!FirebaseUtil().isUserLoggedIn()) {
-                  await Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-                } else {
+                if (FirebaseUtil().isUserLoggedIn()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Failed to logout. Try again.")),
                   );
