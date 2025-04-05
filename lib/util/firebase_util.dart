@@ -17,6 +17,7 @@ class FirebaseUtil {
   static final FirebaseUtil _instance = FirebaseUtil._privateConstructor();
 
   late FirebaseFirestore _firestoreDB;
+  bool _authListenerSet = false;
 
   Future<void> initFirebase() async {
     await Firebase.initializeApp(
@@ -54,5 +55,23 @@ class FirebaseUtil {
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
+  }
+
+  void listenAuthStateChanges(GlobalKey<NavigatorState> navigatorKey) {
+    if (_authListenerSet) return;
+    _authListenerSet = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FirebaseAuth.instance.authStateChanges().listen((user) {
+        var nav = navigatorKey.currentState;
+        if (nav == null) return;
+
+        if (user == null) {
+          nav.pushNamedAndRemoveUntil('/login', (route) => false);
+        } else {
+          nav.pushNamedAndRemoveUntil('/main', (route) => false);
+        }
+      });
+    });
   }
 }
