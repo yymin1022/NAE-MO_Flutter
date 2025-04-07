@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_project/pages/main/calendar/calendar_event.dart';
 import 'package:todo_project/pages/main/calendar/calendar_view.dart';
 import 'package:todo_project/pages/main/time_listview.dart';
 import 'package:todo_project/pages/main/todo/todo_view.dart';
@@ -17,10 +18,15 @@ class _MainPageState extends State<MainPage> {
   final ScrollController _timeScrollController = ScrollController();
   final ScrollController _todoScrollController = ScrollController();
   bool isCalendarEnabled = true;
+  List<CalendarEvent> _events = [];
+  bool _isLoading = false;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
+
+    _fetchEvents();
 
     _calendarScrollController.addListener(_syncScroll);
     _timeScrollController.addListener(_syncScroll);
@@ -37,6 +43,31 @@ class _MainPageState extends State<MainPage> {
     _timeScrollController.dispose();
     _todoScrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchEvents() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      var events = await getCalendarEvents();
+      setState(() {
+        _events = events;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString()))
+        );
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _syncScroll() {
@@ -84,6 +115,7 @@ class _MainPageState extends State<MainPage> {
                 child: CalendarView(
                   isPageEnabled: isCalendarEnabled,
                   scrollController: _calendarScrollController,
+                  events: _events,
                 )
               ),
               TimeListview(
