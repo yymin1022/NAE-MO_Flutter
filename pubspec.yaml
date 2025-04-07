@@ -44,6 +44,8 @@ dependencies:
   cloud_firestore: ^5.5.1
   google_sign_in: ^6.2.2
   provider: ^6.1.4
+  googleapis: ^13.2.0
+  extension_google_sign_in_as_googleapis_auth: ^2.0.13
 
 dev_dependencies:
   flutter_test:
