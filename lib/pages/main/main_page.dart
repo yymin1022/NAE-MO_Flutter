@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_project/pages/main/calendar/calendar_event.dart';
+import 'package:todo_project/pages/main/calendar/calendar_event_manager.dart';
 import 'package:todo_project/pages/main/calendar/calendar_view.dart';
 import 'package:todo_project/pages/main/time_listview.dart';
 import 'package:todo_project/pages/main/todo/todo_view.dart';
@@ -52,7 +53,7 @@ class _MainPageState extends State<MainPage> {
     });
 
     try {
-      var events = await getCalendarEvents();
+      var events = await CalendarEventManager().getCalendarEvents();
       setState(() {
         _events = events;
       });
