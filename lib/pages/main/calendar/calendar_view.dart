@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:todo_project/pages/main/calendar/calendar_event.dart';
 import 'package:todo_project/pages/main/calendar/calendar_item.dart';
 
 class CalendarView extends StatefulWidget {
-  const CalendarView({super.key, required this.isPageEnabled, required this.scrollController});
+  const CalendarView({
+    super.key,
+    required this.isPageEnabled,
+    required this.scrollController,
+    required this.events,
+  });
+
   final bool isPageEnabled;
   final ScrollController scrollController;
+  final List<CalendarEvent> events;
 
   @override
   State<StatefulWidget> createState() => _CalendarViewState();
@@ -24,7 +32,13 @@ class _CalendarViewState extends State<CalendarView> {
         controller: widget.scrollController,
         itemCount: itemCnt,
         itemBuilder: (_, idx) {
-          return CalendarItem(idx: idx, itemColor: colorList[idx % 2]);
+          CalendarEvent event;
+          if (idx < 0 || idx >= widget.events.length) {
+            event = CalendarEvent.empty();
+          } else {
+            event = widget.events[idx];
+          }
+          return CalendarItem(idx: idx, event: event, itemColor: colorList[idx % 2]);
         }
       ),
     );
