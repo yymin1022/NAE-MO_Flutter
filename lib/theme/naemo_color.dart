@@ -4,6 +4,11 @@ class NaemoColor {
   static const Color black = Colors.black;
   static const Color white = Colors.white;
 
+  static const Color gray1 = Color(0xFF444444);
+  static const Color gray2 = Color(0xFF888888);
+  static const Color gray3 = Color(0xFFCCCCCC);
+  static const Color gray4 = Color(0xFFEEEEEE);
+
   static const Color naemoBlue = Color(0xFFFF4444);
   static const Color naemoRed = Color(0xFF4444FF);
 
