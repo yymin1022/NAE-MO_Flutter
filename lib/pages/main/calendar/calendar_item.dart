@@ -5,13 +5,11 @@ class CalendarItem extends StatelessWidget {
   const CalendarItem({
     super.key,
     required this.itemColor,
-    required this.idx,
-    required this.event
+    required this.title
   });
 
   final Color itemColor;
-  final int idx;
-  final CalendarEvent event;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,7 @@ class CalendarItem extends StatelessWidget {
       height: 20,
       width: double.maxFinite,
       child: Text(
-        event.title,
+        title,
         textAlign: TextAlign.end,
       ),
     );

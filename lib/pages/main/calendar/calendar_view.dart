@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_project/pages/main/calendar/calendar_event.dart';
 import 'package:todo_project/pages/main/calendar/calendar_item.dart';
+import 'package:todo_project/pages/main/calendar/calendar_view_manager.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({
@@ -38,7 +39,7 @@ class _CalendarViewState extends State<CalendarView> {
           } else {
             event = widget.events[idx];
           }
-          return CalendarItem(idx: idx, event: event, itemColor: colorList[idx % 2]);
+          return CalendarViewManager().getCalendarItem(event);
         }
       ),
     );
