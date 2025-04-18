@@ -2,6 +2,7 @@ import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sig
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:todo_project/pages/main/calendar/calendar_event.dart';
+import 'package:todo_project/util/datetime_util.dart';
 
 class CalendarEventManager {
   factory CalendarEventManager() {
@@ -10,7 +11,13 @@ class CalendarEventManager {
   CalendarEventManager._privateConstructor();
   static final CalendarEventManager _instance = CalendarEventManager._privateConstructor();
 
-  Future<List<CalendarEvent>> getCalendarEvents() async {
+  Future<List<CalendarEvent>> getCalendarEventsToday() async {
+    var today = DatetimeUtil().getToday();
+    var tomorrow = today.add(const Duration(days: 1)).subtract(const Duration(seconds: 1));
+    return getCalendarEvents(today, tomorrow);
+  }
+
+  Future<List<CalendarEvent>> getCalendarEvents(DateTime from, DateTime to) async {
     var googleSignIn = GoogleSignIn(scopes: [CalendarApi.calendarScope]);
     await googleSignIn.signInSilently();
     var httpClient = await googleSignIn.authenticatedClient();
@@ -20,10 +27,6 @@ class CalendarEventManager {
     }
 
     var calendarApi = CalendarApi(httpClient);
-    var now = DateTime.now();
-    var startDate = DateTime(now.year, now.month - 1, now.day);
-    var endDate = DateTime(now.year, now.month, now.day + 1)
-        .subtract(const Duration(microseconds: 1));
     var calendarList = await calendarApi.calendarList.list();
     var eventList = <CalendarEvent>[];
 
@@ -32,8 +35,8 @@ class CalendarEventManager {
         if (calendarEntry.id != null) {
           var events = await calendarApi.events.list(
             calendarEntry.id!,
-            timeMin: startDate.toUtc(),
-            timeMax: endDate.toUtc(),
+            timeMin: from.toUtc(),
+            timeMax: to.toUtc(),
             singleEvents: true,
             orderBy: 'startTime',
           );
