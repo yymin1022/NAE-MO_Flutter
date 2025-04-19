@@ -1,4 +1,4 @@
-import 'package:todo_project/pages/main/calendar/calendar_event.dart';
+import 'package:todo_project/models/calendar/calendar_event.dart';
 import 'package:todo_project/pages/main/calendar/calendar_item.dart';
 import 'package:todo_project/theme/naemo_color.dart';
 

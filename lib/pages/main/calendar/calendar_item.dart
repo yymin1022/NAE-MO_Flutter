@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_project/pages/main/calendar/calendar_event.dart';
+import 'package:todo_project/models/calendar/calendar_event.dart';
 
 class CalendarItem extends StatelessWidget {
   const CalendarItem({

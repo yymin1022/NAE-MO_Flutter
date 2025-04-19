@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_project/pages/main/calendar/calendar_event.dart';
+import 'package:todo_project/models/calendar/calendar_event.dart';
 import 'package:todo_project/pages/main/calendar/calendar_item.dart';
-import 'package:todo_project/pages/main/calendar/calendar_view_manager.dart';
+import 'package:todo_project/pages/main/calendar/manager/calendar_view_manager.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({
