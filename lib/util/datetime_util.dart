@@ -7,6 +7,14 @@ class DatetimeUtil {
     return DateTime.now();
   }
 
+  DateTime getTomorrow() {
+    return getToday().add(const Duration(days: 1));
+  }
+
+  DateTime getYesterday() {
+    return getToday().subtract(const Duration(days: 1));
+  }
+
   int getTodayDay() {
     return getToday().day;
   }
