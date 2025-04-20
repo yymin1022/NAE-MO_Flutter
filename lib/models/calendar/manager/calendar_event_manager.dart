@@ -11,8 +11,20 @@ class CalendarEventManager {
 
   Future<List<CalendarEvent>> getCalendarEventsToday() async {
     var today = DatetimeUtil().getToday();
-    var tomorrow = today.add(const Duration(days: 1)).subtract(const Duration(seconds: 1));
-    return getCalendarEvents(today, tomorrow);
+    var nextDay = today.add(const Duration(days: 1)).subtract(const Duration(seconds: 1));
+    return getCalendarEvents(today, nextDay);
+  }
+
+  Future<List<CalendarEvent>> getCalendarEventsTomorrow() async {
+    var tomorrow = DatetimeUtil().getToday();
+    var nextDay = tomorrow.add(const Duration(days: 1)).subtract(const Duration(seconds: 1));
+    return getCalendarEvents(tomorrow, nextDay);
+  }
+
+  Future<List<CalendarEvent>> getCalendarEventsYesterday() async {
+    var yesterday = DatetimeUtil().getToday();
+    var nextDay = yesterday.add(const Duration(days: 1)).subtract(const Duration(seconds: 1));
+    return getCalendarEvents(yesterday, nextDay);
   }
 
   Future<List<CalendarEvent>> getCalendarEvents(DateTime from, DateTime to) async {
