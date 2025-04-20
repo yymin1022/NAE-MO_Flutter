@@ -5,9 +5,7 @@ import 'package:todo_project/models/calendar/calendar_event.dart';
 import 'package:todo_project/util/datetime_util.dart';
 
 class CalendarEventManager {
-  factory CalendarEventManager() {
-    return _instance;
-  }
+  factory CalendarEventManager() { return _instance; }
   CalendarEventManager._privateConstructor();
   static final CalendarEventManager _instance = CalendarEventManager._privateConstructor();
 
