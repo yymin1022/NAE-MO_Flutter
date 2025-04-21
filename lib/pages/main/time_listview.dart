@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_project/theme/naemo_spacing.dart';
 
 class TimeListview extends StatefulWidget {
   const TimeListview({super.key, required this.scrollController});
@@ -12,7 +13,7 @@ class _TimeListviewState extends State<TimeListview> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 60,
+      width: NaemoSpacing.timeListWidth,
       child: ListView.builder(
         controller: widget.scrollController,
         itemCount: 24,

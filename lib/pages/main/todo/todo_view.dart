@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_project/pages/main/todo/todo_item.dart';
+import 'package:todo_project/theme/naemo_spacing.dart';
 
 class TodoView extends StatefulWidget {
   const TodoView({super.key, required this.isPageEnabled, required this.scrollController});
@@ -18,7 +19,7 @@ class _TodoViewState extends State<TodoView> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width - 120,
+      width: MediaQuery.of(context).size.width - (NaemoSpacing.mainDisabledListWidth + NaemoSpacing.timeListWidth),
       color: widget.isPageEnabled ? Colors.blue : Colors.white,
       child: ListView.builder(
           controller: widget.scrollController,
