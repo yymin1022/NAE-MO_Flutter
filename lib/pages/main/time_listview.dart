@@ -19,7 +19,7 @@ class _TimeListviewState extends State<TimeListview> {
         itemCount: 24,
         itemBuilder: (_, idx) {
           return SizedBox(
-            height: 20,
+            height: NaemoSpacing.timeListItemHeight,
             child: Text(
               idx.toString(),
               textAlign: TextAlign.center,
