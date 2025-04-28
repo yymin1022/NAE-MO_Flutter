@@ -9,6 +9,25 @@ class CalendarEventManager {
   CalendarEventManager._privateConstructor();
   static final CalendarEventManager _instance = CalendarEventManager._privateConstructor();
 
+  List<List<CalendarEvent>> getCalendarEventsPerHour(List<CalendarEvent> events) {
+    var timeList = List<List<CalendarEvent>>.generate(24, (_) => List<CalendarEvent>.empty());
+
+    for(var event in events) {
+      var eventTimeHourFrom = event.from.hour;
+      var eventTimeHourTo = event.to.hour;
+
+      if(eventTimeHourTo == eventTimeHourFrom) {
+        timeList[eventTimeHourFrom].add(event);
+      } else {
+        for(var time = eventTimeHourFrom; time <= eventTimeHourTo; time++) {
+          timeList[time].add(event);
+        }
+      }
+    }
+
+    return timeList;
+  }
+
   Future<List<CalendarEvent>> getCalendarEventsToday() async {
     var today = DatetimeUtil().getToday();
     var nextDay = today.add(const Duration(days: 1)).subtract(const Duration(seconds: 1));
