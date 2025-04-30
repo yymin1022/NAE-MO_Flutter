@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:todo_project/models/calendar/calendar_event.dart';
 import 'package:todo_project/util/datetime_util.dart';
+import 'package:todo_project/util/naemo_constants.dart';
 
 class CalendarEventManager {
   factory CalendarEventManager() { return _instance; }
@@ -10,7 +11,7 @@ class CalendarEventManager {
   static final CalendarEventManager _instance = CalendarEventManager._privateConstructor();
 
   List<List<CalendarEvent>> getCalendarEventsPerHour(List<CalendarEvent> events) {
-    var timeList = List<List<CalendarEvent>>.generate(24, (_) => List<CalendarEvent>.empty());
+    var timeList = List<List<CalendarEvent>>.generate(NaemoConstants.timeSlotCount, (_) => List<CalendarEvent>.empty());
 
     for(var event in events) {
       var eventTimeHourFrom = event.from.hour;
