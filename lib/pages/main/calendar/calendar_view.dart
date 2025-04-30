@@ -33,7 +33,15 @@ class _CalendarViewState extends State<CalendarView> {
         controller: widget.scrollController,
         itemCount: NaemoConstants.timeSlotCount,
         itemBuilder: (_, idx) {
-          return CalendarViewManager().getCalendarItem(widget.events[idx][0]);
+          if(widget.events.isEmpty || widget.events[idx].isEmpty) {
+            return CalendarViewManager().getCalendarItem(CalendarEvent.empty());
+          }
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: widget.events[idx].map((event) =>
+              CalendarViewManager().getCalendarItem(event)).toList(),
+          );
         }
       ),
     );

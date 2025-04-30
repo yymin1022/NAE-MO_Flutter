@@ -16,7 +16,6 @@ class CalendarItem extends StatelessWidget {
     return Container(
       color: itemColor,
       height: 20,
-      width: double.maxFinite,
       child: Text(
         title,
         textAlign: TextAlign.end,

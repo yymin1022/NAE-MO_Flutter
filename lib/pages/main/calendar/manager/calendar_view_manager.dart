@@ -9,7 +9,6 @@ class CalendarViewManager {
 
   CalendarItem getCalendarItem(CalendarEvent event) {
     var bgColor = NaemoColor.category1;
-    var eventStart = event.start;
     var eventTitle = event.title;
     return CalendarItem(itemColor: bgColor, title: eventTitle);
   }

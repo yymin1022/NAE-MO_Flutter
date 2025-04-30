@@ -11,7 +11,9 @@ class CalendarEventManager {
   static final CalendarEventManager _instance = CalendarEventManager._privateConstructor();
 
   List<List<CalendarEvent>> getCalendarEventsPerHour(List<CalendarEvent> events) {
-    var timeList = List<List<CalendarEvent>>.generate(NaemoConstants.timeSlotCount, (_) => List<CalendarEvent>.empty());
+    var timeList = List<List<CalendarEvent>>.generate(
+        NaemoConstants.timeSlotCount,
+        (_) => List<CalendarEvent>.empty(growable: true));
 
     for(var event in events) {
       var eventTimeHourFrom = event.from.hour;
@@ -49,10 +51,13 @@ class CalendarEventManager {
 
   Future<List<CalendarEvent>> getCalendarEvents(DateTime from, DateTime to) async {
     var googleSignIn = GoogleSignIn(scopes: [CalendarApi.calendarScope]);
-    await googleSignIn.signInSilently();
-    var httpClient = await googleSignIn.authenticatedClient();
+    var googleUser = await googleSignIn.signIn();
+    if(googleUser == null) {
+      throw Exception("Google Sign In Failed");
+    }
 
-    if (httpClient == null) {
+    var httpClient = await googleSignIn.authenticatedClient();
+    if(httpClient == null) {
       throw Exception("Google login unavailable");
     }
 
