@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   final ScrollController _timeScrollController = ScrollController();
   final ScrollController _todoScrollController = ScrollController();
   bool isCalendarEnabled = true;
-  List<CalendarEvent> _events = [];
+  List<List<CalendarEvent>> _events = [];
   bool _isLoading = false;
   String? _error;
 
@@ -53,9 +53,10 @@ class _MainPageState extends State<MainPage> {
     });
 
     try {
-      var events = await CalendarEventManager().getCalendarEventsToday();
+      var todayEvents = await CalendarEventManager().getCalendarEventsToday();
+      var eventListPerTime = CalendarEventManager().getCalendarEventsPerHour(todayEvents);
       setState(() {
-        _events = events;
+        _events = eventListPerTime;
       });
     } catch (e) {
       setState(() {

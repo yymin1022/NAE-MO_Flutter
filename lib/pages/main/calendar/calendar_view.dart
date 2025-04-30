@@ -13,7 +13,7 @@ class CalendarView extends StatefulWidget {
 
   final bool isPageEnabled;
   final ScrollController scrollController;
-  final List<CalendarEvent> events;
+  final List<List<CalendarEvent>> events;
 
   @override
   State<StatefulWidget> createState() => _CalendarViewState();
@@ -37,7 +37,7 @@ class _CalendarViewState extends State<CalendarView> {
           if (idx < 0 || idx >= widget.events.length) {
             event = CalendarEvent.empty();
           } else {
-            event = widget.events[idx];
+            event = widget.events[idx][0];
           }
           return CalendarViewManager().getCalendarItem(event);
         }
