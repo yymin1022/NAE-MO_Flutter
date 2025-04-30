@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_project/models/calendar/calendar_event.dart';
 import 'package:todo_project/pages/main/calendar/manager/calendar_view_manager.dart';
 import 'package:todo_project/theme/naemo_spacing.dart';
+import 'package:todo_project/util/naemo_constants.dart';
 
 class CalendarView extends StatefulWidget {
   const CalendarView({
@@ -21,7 +22,6 @@ class CalendarView extends StatefulWidget {
 
 class _CalendarViewState extends State<CalendarView> {
   final colorList = [Colors.blue, Colors.white];
-  final itemCnt = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +31,9 @@ class _CalendarViewState extends State<CalendarView> {
       color: widget.isPageEnabled ? Colors.blue : Colors.white,
       child: ListView.builder(
         controller: widget.scrollController,
-        itemCount: itemCnt,
+        itemCount: NaemoConstants.timeSlotCount,
         itemBuilder: (_, idx) {
-          CalendarEvent event;
-          if (idx < 0 || idx >= widget.events.length) {
-            event = CalendarEvent.empty();
-          } else {
-            event = widget.events[idx][0];
-          }
-          return CalendarViewManager().getCalendarItem(event);
+          return CalendarViewManager().getCalendarItem(widget.events[idx][0]);
         }
       ),
     );
