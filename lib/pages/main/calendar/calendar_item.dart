@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_project/models/calendar/calendar_event.dart';
+import 'package:todo_project/theme/naemo_spacing.dart';
 
 class CalendarItem extends StatelessWidget {
   const CalendarItem({
@@ -15,7 +16,7 @@ class CalendarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: itemColor,
-      height: 20,
+      height: NaemoSpacing.timeListItemHeight,
       child: Text(
         title,
         textAlign: TextAlign.end,
